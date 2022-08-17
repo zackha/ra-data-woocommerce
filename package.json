@@ -25,9 +25,9 @@
   "bugs": {
     "url": "https://github.com/zackha/ra-data-woocommerce/issues"
   },
-  "main": "src/index.js",
+  "main": "index.js",
   "files": [
-    "src/index.js"
+    "index.js"
   ],
   "dependencies": {
     "query-string": "^7.1.1",
