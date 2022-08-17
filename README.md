@@ -18,14 +18,14 @@ This Data Provider fits REST APIs powered by [Woocommerce REST API](https://wooc
 
 | Method             | API calls                                                                                                    |
 | ------------------ | -------------------------------------------------------------------------------------------------------------|
-| `getList`          | `GET https://my.api.url/orders?order=asc&page=1&per_page=10`                                                 |
-| `getOne`           | `GET https://my.api.url/orders/123`                                                                          |
-| `getMany`          | `GET https://my.api.url/orders?include=123,456,789`                                                          |
-| `getManyReference` | `GET https://my.api.url/orders?customer_id=345`                                                              |
-| `create`           | `POST https://my.api.url/orders`                                                                             |
-| `update`           | `PUT https://my.api.url/orders/123`                                                                          |
-| `updateMany`       | `PUT https://my.api.url/orders/123`, `PUT http://my.api.url/orders/456`, `PUT http://my.api.url/orders/789`  |
-| `delete`           | `DELETE https://my.api.url/orders/123`                                                                       |
+| `getList`          | `GET https://example.com/orders?order=asc&page=1&per_page=10`                                                 |
+| `getOne`           | `GET https://example.com/orders/123`                                                                          |
+| `getMany`          | `GET https://example.com/orders?include=123,456,789`                                                          |
+| `getManyReference` | `GET https://example.com/orders?customer_id=345`                                                              |
+| `create`           | `POST https://example.com/orders`                                                                             |
+| `update`           | `PUT https://example.com/orders/123`                                                                          |
+| `updateMany`       | `PUT https://example.com/orders/123`, `PUT http://example.com/orders/456`, `PUT http://example.com/orders/789`  |
+| `delete`           | `DELETE https://example.com/orders/123`                                                                       |
 
 If your API is on another domain as the JS code, you'll need to whitelist this header with an `Access-Control-Expose-Headers` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) header.
 
@@ -40,9 +40,9 @@ import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin';
 import woocommerceData from './ra-data-woocommerce';
 
 const dataProvider = woocommerceData({
-    woocommerceUrl: 'https://rays.com.tr/wp-json/wc/v3',
-    consumerKey: 'ck_4b7c9c94dd61b458e7a0a13e40c8f1b98a395310',
-    consumerSecret: 'cs_de8d232a90f55d73806e71c79e29b9fc079111da',
+    woocommerceUrl: 'https://example.com',
+    consumerKey: 'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+    consumerSecret: 'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
 })
 
 const App = () => (
