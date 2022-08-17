@@ -1,6 +1,6 @@
 {
   "name": "ra-data-woocommerce",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "JSON Server data provider for react-admin",
   "authors": [
     "Zack Hatlen <zckhtln@icloud.com>"

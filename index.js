@@ -1,6 +1,42 @@
 import { fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
+/**
+ * Maps react-admin queries to a WooCommerce REST API
+ *
+ * @see https://woocommerce.github.io/woocommerce-rest-api-docs/
+ *
+ * @example
+ *
+ * getList          => GET https://example.com/orders?order=asc&page=1&per_page=10
+ * getOne           => GET https://example.com/orders/123
+ * getMany          => GET https://example.com/orders?include=123,456,789
+ * getManyReference => GET https://example.com/orders?customer_id=345
+ * create           => POST https://example.com/orders
+ * update           => PUT https://example.com/orders/123
+ * updateMany       => PUT https://example.com/orders/123, PUT http://example.com/orders/456, PUT http://example.com/orders/789
+ * delete           => DELETE https://example.com/orders/123
+ *
+ * @example
+ *
+ * import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin';
+ * import woocommerceData from 'ra-data-woocommerce';
+ * 
+ * const dataProvider = woocommerceData({
+ *     woocommerceUrl: 'https://example.com',
+ *     consumerKey: 'ck_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+ *     consumerSecret: 'cs_XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX',
+ * })
+ * 
+ * const App = () => (
+ *     <Admin dataProvider={dataProvider}>
+ *         <Resource name="orders" list={ListGuesser} edit={EditGuesser} />
+ *         <Resource name="customers" list={ListGuesser} edit={EditGuesser} />
+ *     </Admin>
+ * );
+ * 
+ * export default App;
+ */
 export default ({woocommerceUrl, consumerKey, consumerSecret,
     httpClient = (url, options = {}) => {
         if (!options.headers) {options.headers = new Headers({ Accept: 'application/json' });}
