@@ -1,70 +1,107 @@
-# Getting Started with Create React App
+# Woocommerce REST API Data Provider For React-Admin
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Woocommerce REST API Data Provider for [react-admin](https://github.com/marmelab/react-admin), the frontend framework for building admin applications on top of REST/GraphQL services.
 
-## Available Scripts
+## Installation
 
-In the project directory, you can run:
+```sh
+npm install --save ra-data-woocommerce
 
-### `yarn start`
+or
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+yarn add ra-data-woocommerce
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## REST Dialect
 
-### `yarn test`
+This Data Provider fits REST APIs powered by [Woocommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Method             | API calls                                                                                               |
+| ------------------ | ------------------------------------------------------------------------------------------------------- |
+| `getList`          | `GET http://my.api.url/posts?_sort=title&order=asc&page=1&per_page=10&title=bar`                         |
+| `getOne`           | `GET http://my.api.url/posts/123`                                                                       |
+| `getMany`          | `GET http://my.api.url/posts?id=123&id=456&id=789`     |
+| `getManyReference` | `GET http://my.api.url/posts?author_id=345`                                                             |
+| `create`           | `POST http://my.api.url/posts`                                                                      |
+| `update`           | `PUT http://my.api.url/posts/123`                                                                       |
+| `updateMany`       | `PUT http://my.api.url/posts/123`, `PUT http://my.api.url/posts/456`, `PUT http://my.api.url/posts/789` |
+| `delete`           | `DELETE http://my.api.url/posts/123`                                                                    |
 
-### `yarn build`
+**Note**: The JSON Server REST Data Provider expects the API to include a `X-Total-Count` header in the response to `getList` and `getManyReference` calls. The value must be the total number of resources in the collection. This allows react-admin to know how many pages of resources there are in total, and build the pagination controls.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+X-Total-Count: 319
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If your API is on another domain as the JS code, you'll need to whitelist this header with an `Access-Control-Expose-Headers` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) header.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```
+Access-Control-Expose-Headers: X-Total-Count
+```
 
-### `yarn eject`
+## Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```jsx
+// in src/App.js
+import * as React from "react";
+import { Admin, Resource } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+import { PostList } from './posts';
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+const App = () => (
+    <Admin dataProvider={jsonServerProvider('https://jsonplaceholder.typicode.com')}>
+        <Resource name="posts" list={PostList} />
+    </Admin>
+);
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+export default App;
+```
 
-## Learn More
+### Adding Custom Headers
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The provider function accepts an HTTP client function as second argument. By default, they use react-admin's `fetchUtils.fetchJson()` as HTTP client. It's similar to HTML5 `fetch()`, except it handles JSON decoding and HTTP error codes automatically.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+That means that if you need to add custom headers to your requests, you just need to *wrap* the `fetchJson()` call inside your own function:
 
-### Code Splitting
+```jsx
+import { fetchUtils, Admin, Resource } from 'react-admin';
+import jsonServerProvider from 'ra-data-json-server';
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+const httpClient = (url, options = {}) => {
+    if (!options.headers) {
+        options.headers = new Headers({ Accept: 'application/json' });
+    }
+    // add your own headers here
+    options.headers.set('X-Custom-Header', 'foobar');
+    return fetchUtils.fetchJson(url, options);
+};
+const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com', httpClient);
 
-### Analyzing the Bundle Size
+render(
+    <Admin dataProvider={dataProvider} title="Example Admin">
+       ...
+    </Admin>,
+    document.getElementById('root')
+);
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Now all the requests to the REST API will contain the `X-Custom-Header: foobar` header.
 
-### Making a Progressive Web App
+**Tip**: The most common usage of custom headers is for authentication. `fetchJson` has built-on support for the `Authorization` token header:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```js
+const httpClient = (url, options = {}) => {
+    options.user = {
+        authenticated: true,
+        token: 'SRTRDFVESGNJYTUKTYTHRG'
+    };
+    return fetchUtils.fetchJson(url, options);
+};
+```
 
-### Advanced Configuration
+Now all the requests to the REST API will contain the `Authorization: SRTRDFVESGNJYTUKTYTHRG` header.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## License
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This data provider is licensed under the MIT License, and sponsored by [marmelab](https://marmelab.com).
