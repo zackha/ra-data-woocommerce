@@ -20,7 +20,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
             per_page: perPage,
             order: (field, order === 'DESC' ? 'desc' : 'asc'),
         };
-        const url = `${woocommerceUrl}/${resource}?${stringify(query)}`;
+        const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
@@ -29,7 +29,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
     },
 
     getOne: (resource, params) =>
-        httpClient(`${woocommerceUrl}/${resource}/${params.id}`).then(({ json }) => ({
+        httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${params.id}`).then(({ json }) => ({
             data: json,
         })),
 
@@ -37,7 +37,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
         const query = {
             include: Array(params.ids),
         };
-        const url = `${woocommerceUrl}/${resource}?${stringify(query)}`;
+        const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`;
         return httpClient(url).then(({ json }) => ({ data: json }));
     },
 
@@ -52,7 +52,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
                 [params.target]: params.id,
             }),
         };
-        const url = `${woocommerceUrl}/${resource}?${stringify(query)}`;
+        const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`;
 
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
@@ -61,7 +61,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
     },
 
     create: (resource, params) =>
-        httpClient(`${woocommerceUrl}/${resource}`, {
+        httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}`, {
             method: 'POST',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({
@@ -69,7 +69,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
         })),
 
     update: (resource, params) =>
-        httpClient(`${woocommerceUrl}/${resource}/${params.id}`, {
+        httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${params.id}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json })),
@@ -78,14 +78,14 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
         const query = {
             filter: JSON.stringify({ id: params.ids}),
         };
-        return httpClient(`${woocommerceUrl}/${resource}?${stringify(query)}`, {
+        return httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`, {
             method: 'PUT',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json }));
     },
 
     delete: (resource, params) =>
-        httpClient(`${woocommerceUrl}/${resource}/${params.id}`, {
+        httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${params.id}`, {
             method: 'DELETE',
         }).then(({ json }) => ({ data: json })),
 
@@ -93,7 +93,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
         const query = {
             filter: JSON.stringify({ id: params.ids}),
         };
-        return httpClient(`${woocommerceUrl}/${resource}?${stringify(query)}`, {
+        return httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`, {
             method: 'DELETE',
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json }));
