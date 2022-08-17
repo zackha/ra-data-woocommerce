@@ -1,0 +1,30 @@
+{
+  "name": "ra-data-woocommerce",
+  "version": "1.0.5",
+  "description": "JSON Server data provider for react-admin",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zackha/ra-data-woocommerce.git"
+  },
+  "keywords": [
+  "woocommerce",
+  "react-admin",
+  "woocommerce react admin",
+  "woocommerce react",
+  "woocommerce api",
+  "woocommerce rest api",
+  "api admin",
+  "woocommerce admin",
+  "woocommerce api admin react"
+  ],
+  "author": "Zack Hatlen <zckhtln@icloud.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zackha/ra-data-woocommerce/issues"
+  },
+  "homepage": "https://github.com/zackha/ra-data-woocommerce#readme"
+}
