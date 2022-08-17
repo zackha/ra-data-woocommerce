@@ -37,7 +37,7 @@ You need to allow access to the your IP number, from the firewall settings (whit
 ```jsx
 // in src/App.js
 import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin';
-import woocommerceData from './ra-data-woocommerce';
+import woocommerceData from 'ra-data-woocommerce';
 
 const dataProvider = woocommerceData({
     woocommerceUrl: 'https://example.com',
