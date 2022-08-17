@@ -29,71 +29,31 @@ This Data Provider fits REST APIs powered by [Woocommerce REST API](https://wooc
 
 If your API is on another domain as the JS code, you'll need to whitelist this header with an `Access-Control-Expose-Headers` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) header.
 
-You need to allow access (whitelist - allowlist) to your IP number from the hosting or firewall settings of your server where your WooCommerce site is located.
+You need to allow access to the your IP number, from the firewall settings (whitelist - allowlist) of your server where your WooCommerce site is located.
 
 
 ## Usage
 
 ```jsx
 // in src/App.js
-import * as React from "react";
-import { Admin, Resource } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
+import { Admin, Resource, ListGuesser, EditGuesser } from 'react-admin';
+import woocommerceData from './ra-data-woocommerce';
 
-import { PostList } from './posts';
+const dataProvider = woocommerceData({
+    woocommerceUrl: 'https://rays.com.tr/wp-json/wc/v3',
+    consumerKey: 'ck_4b7c9c94dd61b458e7a0a13e40c8f1b98a395310',
+    consumerSecret: 'cs_de8d232a90f55d73806e71c79e29b9fc079111da',
+})
 
 const App = () => (
-    <Admin dataProvider={jsonServerProvider('https://jsonplaceholder.typicode.com')}>
-        <Resource name="posts" list={PostList} />
+    <Admin dataProvider={dataProvider}>
+        <Resource name="orders" list={ListGuesser} edit={EditGuesser} />
+        <Resource name="customers" list={ListGuesser} edit={EditGuesser} />
     </Admin>
 );
 
 export default App;
 ```
-
-### Adding Custom Headers
-
-The provider function accepts an HTTP client function as second argument. By default, they use react-admin's `fetchUtils.fetchJson()` as HTTP client. It's similar to HTML5 `fetch()`, except it handles JSON decoding and HTTP error codes automatically.
-
-That means that if you need to add custom headers to your requests, you just need to *wrap* the `fetchJson()` call inside your own function:
-
-```jsx
-import { fetchUtils, Admin, Resource } from 'react-admin';
-import jsonServerProvider from 'ra-data-json-server';
-
-const httpClient = (url, options = {}) => {
-    if (!options.headers) {
-        options.headers = new Headers({ Accept: 'application/json' });
-    }
-    // add your own headers here
-    options.headers.set('X-Custom-Header', 'foobar');
-    return fetchUtils.fetchJson(url, options);
-};
-const dataProvider = jsonServerProvider('https://jsonplaceholder.typicode.com', httpClient);
-
-render(
-    <Admin dataProvider={dataProvider} title="Example Admin">
-       ...
-    </Admin>,
-    document.getElementById('root')
-);
-```
-
-Now all the requests to the REST API will contain the `X-Custom-Header: foobar` header.
-
-**Tip**: The most common usage of custom headers is for authentication. `fetchJson` has built-on support for the `Authorization` token header:
-
-```js
-const httpClient = (url, options = {}) => {
-    options.user = {
-        authenticated: true,
-        token: 'SRTRDFVESGNJYTUKTYTHRG'
-    };
-    return fetchUtils.fetchJson(url, options);
-};
-```
-
-Now all the requests to the REST API will contain the `Authorization: SRTRDFVESGNJYTUKTYTHRG` header.
 
 ## License
 
