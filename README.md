@@ -16,16 +16,16 @@ yarn add ra-data-woocommerce
 
 This Data Provider fits REST APIs powered by [Woocommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs)
 
-| Method             | API calls                                                                                               |
-| ------------------ | ------------------------------------------------------------------------------------------------------- |
-| `getList`          | `GET http://my.api.url/posts?_sort=title&order=asc&page=1&per_page=10&title=bar`                         |
-| `getOne`           | `GET http://my.api.url/posts/123`                                                                       |
-| `getMany`          | `GET http://my.api.url/posts?id=123&id=456&id=789`     |
-| `getManyReference` | `GET http://my.api.url/posts?author_id=345`                                                             |
-| `create`           | `POST http://my.api.url/posts`                                                                      |
-| `update`           | `PUT http://my.api.url/posts/123`                                                                       |
-| `updateMany`       | `PUT http://my.api.url/posts/123`, `PUT http://my.api.url/posts/456`, `PUT http://my.api.url/posts/789` |
-| `delete`           | `DELETE http://my.api.url/posts/123`                                                                    |
+| Method             | API calls                                                                                                    |
+| ------------------ | -------------------------------------------------------------------------------------------------------------|
+| `getList`          | `GET https://my.api.url/orders?order=asc&page=1&per_page=10`                                                 |
+| `getOne`           | `GET https://my.api.url/orders/123`                                                                          |
+| `getMany`          | `GET https://my.api.url/orders?include=123,456,789`                                                          |
+| `getManyReference` | `GET https://my.api.url/orders?customer_id=345`                                                              |
+| `create`           | `POST https://my.api.url/orders`                                                                             |
+| `update`           | `PUT https://my.api.url/orders/123`                                                                          |
+| `updateMany`       | `PUT https://my.api.url/orders/123`, `PUT http://my.api.url/orders/456`, `PUT http://my.api.url/orders/789`  |
+| `delete`           | `DELETE https://my.api.url/orders/123`                                                                       |
 
 **Note**: The JSON Server REST Data Provider expects the API to include a `X-Total-Count` header in the response to `getList` and `getManyReference` calls. The value must be the total number of resources in the collection. This allows react-admin to know how many pages of resources there are in total, and build the pagination controls.
 
