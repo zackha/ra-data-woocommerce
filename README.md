@@ -27,6 +27,7 @@ This Data Provider fits REST APIs powered by [Woocommerce REST API](https://wooc
 | `updateMany`       | `PUT https://example.com/orders/123`, `PUT http://example.com/orders/456`, `PUT http://example.com/orders/789`  |
 | `delete`           | `DELETE https://example.com/orders/123`                                                                       |
 
+
 If your API is on another domain as the JS code, you'll need to whitelist this header with an `Access-Control-Expose-Headers` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) header.
 
 You need to allow access to the your IP number, from the firewall settings (whitelist - allowlist) of your server where your WooCommerce site is located.
