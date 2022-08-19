@@ -1,7 +1,7 @@
 {
   "name": "ra-data-woocommerce",
-  "version": "1.0.15",
-  "description": "JSON Server data provider for react-admin",
+  "version": "1.0.16",
+  "description": "WooCommerce REST API data provider for react-admin",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
