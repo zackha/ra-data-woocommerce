@@ -78,21 +78,10 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
     },
 
     getManyReference: (resource, params) => {
-        const { page, perPage } = params.pagination;
-        const { field, order } = params.sort;
-        const query = {
-            sort: JSON.stringify([field, order]),
-            range: JSON.stringify([(page - 1) * perPage, page * perPage - 1]),
-            filter: JSON.stringify({
-                ...params.filter,
-                [params.target]: params.id,
-            }),
-        };
-        const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`;
-
+        const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}/${params.id}/${params.target}`;
         return httpClient(url).then(({ headers, json }) => ({
             data: json,
-            total: parseInt(headers.get('X-WP-Total').split('/').pop(), 10),
+            total: parseInt(headers.get('Content-Type')),
         }));
     },
 
