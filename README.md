@@ -16,16 +16,17 @@ yarn add ra-data-woocommerce
 
 This Data Provider fits REST APIs powered by [Woocommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs)
 
-| Method             | API calls                                                                                                    |
-| ------------------ | -------------------------------------------------------------------------------------------------------------|
-| `getList`          | `GET https://example.com/orders?order=asc&page=1&per_page=10`                                                 |
-| `getOne`           | `GET https://example.com/orders/123`                                                                          |
-| `getMany`          | `GET https://example.com/orders?include=123,456,789`                                                          |
-| `getManyReference` | `GET https://example.com/orders/103445/refunds`                                                              |
-| `create`           | `POST https://example.com/orders`                                                                             |
-| `update`           | `PUT https://example.com/orders/123`                                                                          |
-| `updateMany`       | `PUT https://example.com/orders/123`, `PUT http://example.com/orders/456`, `PUT http://example.com/orders/789`  |
-| `delete`           | `DELETE https://example.com/orders/123`                                                                       |
+| Method             | API calls                                                                                                                    |
+| ------------------ | -----------------------------------------------------------------------------------------------------------------------------|
+| `getList`          | `GET https://example.com/orders?order=asc&page=1&per_page=10`                                                                |
+| `getOne`           | `GET https://example.com/orders/123`                                                                                         |
+| `getMany`          | `GET https://example.com/orders?include=123,456,789`                                                                         |
+| `getManyReference` | `GET https://example.com/orders/123/notes`                                                                                   |
+| `create`           | `POST https://example.com/orders`                                                                                            |
+| `update`           | `PUT https://example.com/orders/123`                                                                                         |
+| `updateMany`       | `PUT https://example.com/orders/123`, `PUT http://example.com/orders/456`, `PUT http://example.com/orders/789`               |
+| `delete`           | `DELETE https://example.com/orders/123`                                                                                      |
+| `deleteMany`       | `DELETE https://example.com/orders/123`, `DELETE https://example.com/orders/456`, `DELETE https://example.com/orders/789`    |
 
 
 If your API is on another domain as the JS code, you'll need to whitelist this header with an `Access-Control-Expose-Headers` [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/Access_control_CORS) header.

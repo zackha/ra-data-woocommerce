@@ -8,11 +8,12 @@
  * getList          => GET https://example.com/orders?order=asc&page=1&per_page=10
  * getOne           => GET https://example.com/orders/123
  * getMany          => GET https://example.com/orders?include=123,456,789
- * getManyReference => GET https://example.com/orders?customer_id=345
+ * getManyReference => GET https://example.com/orders/123/notes
  * create           => POST https://example.com/orders
  * update           => PUT https://example.com/orders/123
  * updateMany       => PUT https://example.com/orders/123, PUT http://example.com/orders/456, PUT http://example.com/orders/789
  * delete           => DELETE https://example.com/orders/123
+ * deleteMany       => DELETE https://example.com/orders/123, DELETE https://example.com/orders/456, DELETE https://example.com/orders/789
  *
  * @example
  *
