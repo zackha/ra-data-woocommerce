@@ -8,7 +8,7 @@ import { stringify } from 'query-string';
  *
  * @example
  *
- * getList          => GET https://example.com/orders?order=asc&page=1&per_page=10
+ * getList          => GET https://example.com/orders?order=asc&page=1&per_page=10&search=example&status=completed
  * getOne           => GET https://example.com/orders/123
  * getMany          => GET https://example.com/orders?include=123,456,789
  * getManyReference => GET https://example.com/orders/123/notes
@@ -50,12 +50,13 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
     getList: (resource, params) => {
         const { page, perPage } = params.pagination;
         const { field, order } = params.sort;
+        const { search, status } = params.filter;
         const query = {
-            sort: JSON.stringify([field, order]),
-            filter: JSON.stringify(params.filter),
+            order: order.toLowerCase(),
             page: page,
             per_page: perPage,
-            order: (field, order === 'DESC' ? 'desc' : 'asc'),
+            search: search,
+            status: status,
         };
         const url = `${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`;
 

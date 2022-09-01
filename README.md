@@ -18,7 +18,7 @@ This Data Provider fits REST APIs powered by [Woocommerce REST API](https://wooc
 
 | Method             | API calls                                                                                                                    |
 | ------------------ | -----------------------------------------------------------------------------------------------------------------------------|
-| `getList`          | `GET https://example.com/orders?order=asc&page=1&per_page=10`                                                                |
+| `getList`          | `GET https://example.com/orders?order=asc&page=1&per_page=10&search=example&status=completed`                                |
 | `getOne`           | `GET https://example.com/orders/123`                                                                                         |
 | `getMany`          | `GET https://example.com/orders?include=123,456,789`                                                                         |
 | `getManyReference` | `GET https://example.com/orders/123/notes`                                                                                   |
