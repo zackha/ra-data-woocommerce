@@ -101,15 +101,15 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
             body: JSON.stringify(params.data),
         }).then(({ json }) => ({ data: json })),
 
-    updateMany: (resource, params) => {
-        const query = {
-            include: Array(params.ids),
-        };
-        return httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`, {
-            method: 'PUT',
-            body: JSON.stringify(params.data),
-        }).then(({ json }) => ({ data: json }));
-    },
+    updateMany: (resource, params) =>
+        Promise.all(
+            params.ids.map(id =>
+                httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify(params.data),
+                })
+            )
+        ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
 
     delete: (resource, params) =>
         httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${params.id}`, {
@@ -121,7 +121,6 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
             params.ids.map(id =>
                 httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}/${id}`, {
                     method: 'DELETE',
-                    body: JSON.stringify(params.data),
                 })
             )
         ).then(responses => ({ data: responses.map(({ json }) => json.id) })),
