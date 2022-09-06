@@ -103,7 +103,7 @@ export default ({woocommerceUrl, consumerKey, consumerSecret,
 
     updateMany: (resource, params) => {
         const query = {
-            filter: JSON.stringify({ id: params.ids}),
+            include: Array(params.ids),
         };
         return httpClient(`${woocommerceUrl}/wp-json/wc/v3/${resource}?${stringify(query)}`, {
             method: 'PUT',
