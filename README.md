@@ -59,4 +59,4 @@ export default App;
 
 ## License
 
-This data provider is licensed under the MIT License, and sponsored by [RAYS](https://rays.com.tr).
+This data provider is licensed under the MIT License
